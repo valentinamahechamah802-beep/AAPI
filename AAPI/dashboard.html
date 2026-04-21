@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAPI | Panel de Control Inteligente</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .kpi-simple {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .kpi-item {
+            background: #020617;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 6px solid #ff9d1e;
+        }
+        .kpi-valor {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .kpi-etiqueta {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .control-section {
+            background: #1a2538;
+            padding: 30px;
+            border-radius: 24px;
+            margin: 30px 0;
+        }
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .input-group label {
+            color: #94a3b8;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .input-group input {
+            padding: 12px;
+            background: #0a0f1c;
+            border: 1px solid #2d3a52;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .diagnostico-box {
+            background: #020617;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 30px;
+            border: 1px solid #ff9d1e;
+        }
+        .btn-diagnostico {
+            background: #ff9d1e;
+            color: #0a0f1c;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .btn-salir {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+        .mejora-section {
+            background: #1a2538;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 30px;
+        }
+        .mejora-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .mejora-input input {
+            flex: 1;
+            padding: 12px;
+            background: #0a0f1c;
+            border: 1px solid #2d3a52;
+            border-radius: 8px;
+            color: white;
+        }
+        .mejora-input button {
+            padding: 12px 20px;
+            background: #ff9d1e;
+            color: #0a0f1c;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .lista-mejoras {
+            list-style: none;
+        }
+        .lista-mejoras li {
+            padding: 10px;
+            background: #0a0f1c;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-eliminar {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ==================== TOOLTIP MEJORADO ==================== */
+        .ayuda-icon {
+            color: #ff9d1e;
+            font-size: 0.9rem;
+            cursor: help;
+            position: relative;
+            display: inline-block;
+        }
+
+        .ayuda-icon:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0a0f1c;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            border: 1px solid #ff9d1e;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            pointer-events: none;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: normal;
+        }
+
+        .ayuda-icon:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #ff9d1e transparent transparent transparent;
+            z-index: 1000;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <img src="img/Logo.png" alt="Logo AAPI" class="logo">
+    <div>
+        <h1>AAPI Dashboard</h1>
+        <p>Panel de Monitoreo · Diagnóstico Inteligente</p>
+    </div>
+</header>
+
+<nav>
+    <a href="Api.html"><i class="fas fa-arrow-left"></i> Volver al Inicio</a>
+    <a href="#" title="Funcionalidad planeada para Corte 3">Reportes</a>
+    <a href="#" title="Funcionalidad planeada para Corte 3">Configuración</a>
+</nav>
+
+<div class="dashboard-container">
+    <h2 style="color: white; margin-bottom: 10px;">Bienvenido, Alimentos S.A.</h2>
+    <p style="color: #94a3b8; margin-bottom: 10px;">
+        <i class="fas fa-info-circle" style="color: #ff9d1e;"></i> 
+        Ingrese los valores actuales de su planta. El sistema analizará los datos y generará un pronóstico automático con recomendaciones.
+    </p>
+    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 30px;">
+        <i class="fas fa-question-circle ayuda-icon" data-tooltip="Los campos ya contienen valores de ejemplo. Modifíquelos según su situación real."></i> 
+        Pase el mouse sobre los íconos <span style="color: #ff9d1e;">(?)</span> para ver los rangos recomendados.
+    </p>
+
+    <!-- SECCIÓN DE ENTRADA DE DATOS POR EL USUARIO -->
+    <div class="control-section">
+        <h3 style="color: #ff9d1e; margin-bottom: 20px;"><i class="fas fa-sliders-h"></i> Parámetros de Producción</h3>
+        <div class="input-grid">
+            <div class="input-group">
+                <label>
+                    <i class="fas fa-thermometer-half"></i> Temperatura (°C)
+                    <span class="ayuda-icon" data-tooltip="Rango normal: 70-75°C. Valores >78°C generan alerta crítica.">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </label>
+                <input type="number" id="temp-input" placeholder="Ej: 78" step="0.1" value="78">
+            </div>
+            <div class="input-group">
+                <label>
+                    <i class="fas fa-tint"></i> Humedad (%)
+                    <span class="ayuda-icon" data-tooltip="Rango óptimo: 45-55%. Fuera de este rango afecta la calidad.">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </label>
+                <input type="number" id="hum-input" placeholder="Ej: 52" step="0.1" value="52">
+            </div>
+            <div class="input-group">
+                <label>
+                    <i class="fas fa-tachometer-alt"></i> Velocidad (u/min)
+                    <span class="ayuda-icon" data-tooltip="Objetivo: 100 u/min. Por debajo de 85 u/min indica cuello de botella.">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </label>
+                <input type="number" id="vel-input" placeholder="Ej: 87" value="87">
+            </div>
+            <div class="input-group">
+                <label>
+                    <i class="fas fa-clock"></i> Tiempo de ciclo (seg)
+                    <span class="ayuda-icon" data-tooltip="Tiempo estándar: 10-12 seg. Valores mayores reducen la productividad.">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </label>
+                <input type="number" id="ciclo-input" placeholder="Ej: 12" value="12">
+            </div>
+        </div>
+        <button class="btn-diagnostico" id="btn-analizar"><i class="fas fa-microchip"></i> Analizar y Generar Pronóstico</button>
+        
+        <!-- DIAGNÓSTICO INTELIGENTE -->
+        <div class="diagnostico-box" id="diagnostico-box">
+            <h4 style="color: white; margin-bottom: 15px;"><i class="fas fa-chart-line"></i> Proyección Inteligente AAPI</h4>
+            <div id="resultado-diagnostico">
+                <p style="color: #94a3b8;">Haga clic en "Analizar" para ver el pronóstico basado en sus datos.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-simple">
+        <div class="kpi-item" id="kpi-temp">
+            <div class="kpi-etiqueta">Temperatura Actual</div>
+            <div class="kpi-valor" id="display-temp">78 °C</div>
+            <div id="estado-temp" style="color: #f39c12;">⚠️ Alerta</div>
+        </div>
+        <div class="kpi-item" id="kpi-hum">
+            <div class="kpi-etiqueta">Humedad Actual</div>
+            <div class="kpi-valor" id="display-hum">52 %</div>
+            <div id="estado-hum" style="color: #27ae60;">● Estable</div>
+        </div>
+        <div class="kpi-item" id="kpi-vel">
+            <div class="kpi-etiqueta">Velocidad Línea 1</div>
+            <div class="kpi-valor" id="display-vel">87 u/min</div>
+            <div id="estado-vel" style="color: #e74c3c;">▼ Bajo objetivo</div>
+        </div>
+        <div class="kpi-item" id="kpi-oee">
+            <div class="kpi-etiqueta">Eficiencia Estimada</div>
+            <div class="kpi-valor" id="display-oee">94 %</div>
+            <div id="estado-oee" style="color: #27ae60;">● Óptimo</div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN DE SEGUIMIENTO Y MEJORA CONTINUA -->
+    <div class="mejora-section">
+        <h3 style="color: #ff9d1e; margin-bottom: 15px;"><i class="fas fa-clipboard-list"></i> Acciones de Mejora Continua</h3>
+        <p style="color: #94a3b8; margin-bottom: 15px; font-size: 0.9rem;">Registre aquí las tareas de seguimiento basadas en el diagnóstico.</p>
+        
+        <div class="mejora-input">
+            <input type="text" id="nueva-accion" placeholder="Ej: Calibrar sensor de temperatura...">
+            <button id="btn-agregar"><i class="fas fa-plus"></i> Agregar</button>
+        </div>
+        
+        <ul class="lista-mejoras" id="lista-acciones">
+            <li>Revisar sistema de enfriamiento <button class="btn-eliminar">✓</button></li>
+            <li>Ajustar velocidad de banda transportadora <button class="btn-eliminar">✓</button></li>
+        </ul>
+        <p style="color: #64748b; font-size: 0.8rem; margin-top: 10px;"><i class="fas fa-info-circle"></i> Marque ✓ cuando la acción esté completada.</p>
+    </div>
+
+    <a href="Api.html" class="btn-salir"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+</div>
+
+<footer style="margin-top: 60px;">
+    <p>© 2026 Proyecto AAPI – Tecnología en Automatización Industrial – Universidad de San Buenaventura</p>
+    <p>Zareth Mahecha · María Mena · Samuel Bohórquez · Yulieth Suárez</p>
+</footer>
+
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/573003747010?text=Hola%20AAPI%2C%20necesito%20soporte%20t%C3%A9cnico%20sobre%20el%20panel%20de%20monitoreo." 
+   class="whatsapp-float" 
+   target="_blank" 
+   rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ==================== JAVASCRIPT (MOTOR DE REGLAS) ==================== -->
+<script>
+    (function() {
+        // ----- REFERENCIAS A ELEMENTOS HTML -----
+        var tempInput = document.getElementById('temp-input');
+        var humInput = document.getElementById('hum-input');
+        var velInput = document.getElementById('vel-input');
+        var cicloInput = document.getElementById('ciclo-input');
+        var btnAnalizar = document.getElementById('btn-analizar');
+        var resultadoDiv = document.getElementById('resultado-diagnostico');
+        
+        var displayTemp = document.getElementById('display-temp');
+        var displayHum = document.getElementById('display-hum');
+        var displayVel = document.getElementById('display-vel');
+        var displayOee = document.getElementById('display-oee');
+        var estadoTemp = document.getElementById('estado-temp');
+        var estadoHum = document.getElementById('estado-hum');
+        var estadoVel = document.getElementById('estado-vel');
+        var estadoOee = document.getElementById('estado-oee');
+        var kpiTemp = document.getElementById('kpi-temp');
+        var kpiHum = document.getElementById('kpi-hum');
+        var kpiVel = document.getElementById('kpi-vel');
+        var kpiOee = document.getElementById('kpi-oee');
+
+        // ----- FUNCIÓN DE DIAGNÓSTICO -----
+        function analizarDatos() {
+            var temp = parseFloat(tempInput.value) || 78;
+            var hum = parseFloat(humInput.value) || 52;
+            var vel = parseFloat(velInput.value) || 87;
+            var ciclo = parseFloat(cicloInput.value) || 12;
+            
+            displayTemp.textContent = temp + ' °C';
+            displayHum.textContent = hum + ' %';
+            displayVel.textContent = vel + ' u/min';
+            
+            var diagnostico = '';
+            var riesgo = '';
+            var eficienciaEstimada = 0;
+            var acciones = [];
+            
+            // Evaluación de temperatura
+            if (temp > 80) {
+                estadoTemp.innerHTML = '🔴 Crítico';
+                estadoTemp.style.color = '#e74c3c';
+                kpiTemp.style.borderLeftColor = '#e74c3c';
+                acciones.push('Reducir temperatura inmediatamente. Riesgo de sobrecalentamiento.');
+                riesgo = 'ALTO';
+            } else if (temp > 75) {
+                estadoTemp.innerHTML = '⚠️ Alerta';
+                estadoTemp.style.color = '#f39c12';
+                kpiTemp.style.borderLeftColor = '#f39c12';
+                acciones.push('Monitorear temperatura. Tendencia al alza.');
+                riesgo = 'MEDIO';
+            } else {
+                estadoTemp.innerHTML = '● Estable';
+                estadoTemp.style.color = '#27ae60';
+                kpiTemp.style.borderLeftColor = '#27ae60';
+            }
+            
+            // Evaluación de humedad
+            if (hum > 60 || hum < 40) {
+                estadoHum.innerHTML = '⚠️ Alerta';
+                estadoHum.style.color = '#f39c12';
+                kpiHum.style.borderLeftColor = '#f39c12';
+                acciones.push('Verificar sistema de control de humedad.');
+            } else {
+                estadoHum.innerHTML = '● Estable';
+                estadoHum.style.color = '#27ae60';
+                kpiHum.style.borderLeftColor = '#27ae60';
+            }
+            
+            // Evaluación de velocidad
+            if (vel < 85) {
+                estadoVel.innerHTML = '▼ Bajo objetivo';
+                estadoVel.style.color = '#e74c3c';
+                kpiVel.style.borderLeftColor = '#e74c3c';
+                acciones.push('Aumentar velocidad de línea. Cuello de botella detectado.');
+                riesgo = 'ALTO';
+            } else if (vel < 95) {
+                estadoVel.innerHTML = '⚠️ Atención';
+                estadoVel.style.color = '#f39c12';
+                kpiVel.style.borderLeftColor = '#f39c12';
+                acciones.push('Velocidad por debajo del óptimo. Revisar carga.');
+            } else {
+                estadoVel.innerHTML = '● Normal';
+                estadoVel.style.color = '#27ae60';
+                kpiVel.style.borderLeftColor = '#27ae60';
+            }
+            
+            // Cálculo de eficiencia estimada
+            var factorTemp = temp > 75 ? 0.85 : (temp > 70 ? 0.95 : 1.0);
+            var factorVel = vel / 100;
+            var factorHum = (hum >= 45 && hum <= 55) ? 1.0 : 0.9;
+            eficienciaEstimada = Math.round(factorTemp * factorVel * factorHum * 100);
+            displayOee.textContent = eficienciaEstimada + ' %';
+            
+            if (eficienciaEstimada >= 90) {
+                estadoOee.innerHTML = '● Óptimo';
+                estadoOee.style.color = '#27ae60';
+                kpiOee.style.borderLeftColor = '#27ae60';
+            } else if (eficienciaEstimada >= 75) {
+                estadoOee.innerHTML = '● Aceptable';
+                estadoOee.style.color = '#f39c12';
+                kpiOee.style.borderLeftColor = '#f39c12';
+            } else {
+                estadoOee.innerHTML = '▼ Baja';
+                estadoOee.style.color = '#e74c3c';
+                kpiOee.style.borderLeftColor = '#e74c3c';
+                acciones.push('Revisar parámetros generales. Eficiencia crítica.');
+                riesgo = 'ALTO';
+            }
+            
+            if (!riesgo) {
+                riesgo = (eficienciaEstimada >= 85) ? 'BAJO' : 'MEDIO';
+            }
+            
+            // Construir mensaje de diagnóstico
+            var html = '<div style="margin-bottom: 15px;">';
+            if (riesgo === 'ALTO') {
+                html += '<p style="color: #e74c3c; font-size: 1.2rem;"><i class="fas fa-exclamation-triangle"></i> <strong>RIESGO ALTO DE PÉRDIDA</strong></p>';
+            } else if (riesgo === 'MEDIO') {
+                html += '<p style="color: #f39c12; font-size: 1.2rem;"><i class="fas fa-exclamation-circle"></i> <strong>RIESGO MEDIO - ATENCIÓN REQUERIDA</strong></p>';
+            } else {
+                html += '<p style="color: #27ae60; font-size: 1.2rem;"><i class="fas fa-check-circle"></i> <strong>OPERACIÓN NORMAL - BAJO RIESGO</strong></p>';
+            }
+            html += '</div>';
+            
+            html += '<p style="color: white; margin-bottom: 10px;"><strong>Pronóstico de eficiencia:</strong> ' + eficienciaEstimada + '%</p>';
+            html += '<p style="color: white; margin-bottom: 10px;"><strong>Acciones recomendadas:</strong></p>';
+            html += '<ul style="color: #94a3b8; padding-left: 20px;">';
+            if (acciones.length > 0) {
+                acciones.forEach(function(acc) {
+                    html += '<li>' + acc + '</li>';
+                });
+            } else {
+                html += '<li>Continuar con el monitoreo regular. Todos los parámetros dentro de rangos óptimos.</li>';
+            }
+            html += '</ul>';
+            html += '<p style="color: #64748b; margin-top: 15px; font-size: 0.9rem;"><i class="fas fa-robot"></i> Diagnóstico generado por el motor de reglas AAPI (simulación académica).</p>';
+            
+            resultadoDiv.innerHTML = html;
+        }
+        
+        btnAnalizar.addEventListener('click', analizarDatos);
+        analizarDatos(); // Ejecutar al cargar la página
+        
+        // ----- LISTA DE MEJORA CONTINUA -----
+        var inputAccion = document.getElementById('nueva-accion');
+        var btnAgregar = document.getElementById('btn-agregar');
+        var listaAcciones = document.getElementById('lista-acciones');
+        
+        btnAgregar.addEventListener('click', function() {
+            var texto = inputAccion.value.trim();
+            if (texto !== '') {
+                var nuevoItem = document.createElement('li');
+                nuevoItem.innerHTML = texto + ' <button class="btn-eliminar">✓</button>';
+                listaAcciones.appendChild(nuevoItem);
+                inputAccion.value = '';
+                nuevoItem.querySelector('.btn-eliminar').addEventListener('click', function() {
+                    nuevoItem.remove();
+                });
+            }
+        });
+        
+        inputAccion.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                btnAgregar.click();
+            }
+        });
+        
+        document.querySelectorAll('.btn-eliminar').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                btn.parentElement.remove();
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>
