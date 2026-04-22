@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAPI | Información</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header class="header">
+    <img src="img/Logo.png" alt="Logo AAPI" class="logo">
+    <div><h1>AAPI</h1><p>Automatización inteligente de procesos industriales</p></div>
+</header>
+<nav>
+    <a href="Api.html">Inicio</a>
+    <a href="servicios.html">Servicios</a>
+    <a href="Info.html">Información</a>
+    <a href="cortes.html">Cortes</a>
+    <a href="Api.html#acceso">Portal Empresas</a>
+    <a href="Api.html#contacto">Contáctanos</a>
+</nav>
+<!-- ===== HERO EQUIPO CON FONDO DE FOTO ===== -->
+<section style="
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 5rem 2rem;
+">
+    <!-- Fondo: foto del grupo con overlay oscuro -->
+    <div style="
+        position: absolute; inset: 0;
+        background: url('img/grupo.jpeg') center center / cover no-repeat;
+        filter: brightness(0.35) saturate(0.6);
+        z-index: 0;
+    "></div>
+    <!-- Overlay gradiente para mejor legibilidad -->
+    <div style="
+        position: absolute; inset: 0;
+        background: linear-gradient(to bottom, rgba(10,15,28,0.5) 0%, rgba(10,15,28,0.85) 100%);
+        z-index: 1;
+    "></div>
+
+    <!-- Contenido encima del fondo -->
+    <div style="position: relative; z-index: 2; text-align: center; max-width: 750px;">
+        <p style="color: var(--accent-orange); font-size: 1rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem;">Conoce al equipo</p>
+        <h2 style="font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 1.5rem;">Somos 4 jóvenes que<br>construimos AAPI</h2>
+        <p style="color: rgba(255,255,255,0.82); font-size: 1.15rem; line-height: 1.8; max-width: 620px; margin: 0 auto;">
+            Estudiantes de <strong style="color: var(--accent-orange);">Tecnología en Automatización Industrial</strong> de la Universidad San Buenaventura en Bogotá. Nos unimos con la idea de crear una herramienta real que ayude a reducir pérdidas en el sector alimentario — sin experiencia previa en desarrollo, con muchas ganas de aprender y construir algo que valga la pena.
+        </p>
+    </div>
+</section>
+
+<!-- ===== TARJETAS DEL EQUIPO ===== -->
+<section style="padding: 4rem 2rem; max-width: 1100px; margin: 0 auto;">
+    <h2 style="text-align: center; color: var(--accent-orange); font-size: 2rem; margin-bottom: 0.5rem;">Nuestro Equipo</h2>
+    <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem;">Las personas detrás del proyecto</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2rem;">
+
+        <!-- Zareth -->
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; overflow: hidden; transition: transform 0.3s; text-align: center;"
+             onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="
+                height: 160px;
+                background: linear-gradient(135deg, #1a2538 0%, #0f1c30 100%);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 5rem;
+                border-bottom: 2px solid var(--accent-orange);
+            ">👩‍💻</div>
+            <div style="padding: 1.5rem;">
+                <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem;">Zareth V. Mahecha M.</h3>
+                <span style="display: inline-block; background: rgba(255,157,30,0.15); color: var(--accent-orange); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,157,30,0.3); margin-bottom: 1rem;">Líder de Proyecto</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Coordina las fases del proyecto y lidera la documentación técnica. Se encarga de que el equipo avance con claridad y enfoque.</p>
+            </div>
+        </div>
+
+        <!-- María -->
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; overflow: hidden; transition: transform 0.3s; text-align: center;"
+             onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="
+                height: 160px;
+                background: linear-gradient(135deg, #1a2538 0%, #0f1c30 100%);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 5rem;
+                border-bottom: 2px solid var(--accent-orange);
+            ">🎨</div>
+            <div style="padding: 1.5rem;">
+                <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem;">María N. Mena B.</h3>
+                <span style="display: inline-block; background: rgba(59,130,246,0.15); color: #60a5fa; font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(59,130,246,0.3); margin-bottom: 1rem;">Diseño & Front-End</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Responsable del diseño visual de la interfaz. Construye las páginas web con HTML y CSS asegurando una experiencia atractiva y funcional.</p>
+            </div>
+        </div>
+
+        <!-- Samuel -->
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; overflow: hidden; transition: transform 0.3s; text-align: center;"
+             onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="
+                height: 160px;
+                background: linear-gradient(135deg, #1a2538 0%, #0f1c30 100%);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 5rem;
+                border-bottom: 2px solid var(--accent-orange);
+            ">⚙️</div>
+            <div style="padding: 1.5rem;">
+                <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem;">Samuel Bohórquez R.</h3>
+                <span style="display: inline-block; background: rgba(16,185,129,0.15); color: #34d399; font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(16,185,129,0.3); margin-bottom: 1rem;">Automatización & Lógica</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Enfocado en la parte técnica del sistema: variables industriales, lógica del dashboard y futura integración con sensores y PLC.</p>
+            </div>
+        </div>
+
+        <!-- Yulieth -->
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px; overflow: hidden; transition: transform 0.3s; text-align: center;"
+             onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="
+                height: 160px;
+                background: linear-gradient(135deg, #1a2538 0%, #0f1c30 100%);
+                display: flex; align-items: center; justify-content: center;
+                font-size: 5rem;
+                border-bottom: 2px solid var(--accent-orange);
+            ">📊</div>
+            <div style="padding: 1.5rem;">
+                <h3 style="color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem;">Yulieth C. Suárez S.</h3>
+                <span style="display: inline-block; background: rgba(168,85,247,0.15); color: #c084fc; font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(168,85,247,0.3); margin-bottom: 1rem;">Investigación & Análisis</span>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">Investiga el contexto del sector alimentario, fundamenta teóricamente el proyecto y analiza las variables críticas que AAPI debe monitorear.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== MISIÓN Y VISIÓN ===== -->
+<section style="padding: 0 2rem 5rem; max-width: 1100px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
+        <div style="background: var(--card-bg); padding: 2rem; border-radius: 24px; border: 1px solid var(--border-color);">
+            <h3 style="color: var(--accent-orange); font-size: 1.5rem; margin-bottom: 1rem;">
+                <i class="fas fa-bullseye" style="margin-right: 10px;"></i> Nuestra Misión
+            </h3>
+            <p style="color: var(--text-muted); line-height: 1.8;">
+                Proporcionar a la industria alimentaria una herramienta de monitoreo accesible e inteligente que permita reducir pérdidas productivas mediante el análisis en tiempo real de variables críticas, contribuyendo a la sostenibilidad y competitividad del sector.
+            </p>
+        </div>
+        <div style="background: var(--card-bg); padding: 2rem; border-radius: 24px; border: 1px solid var(--border-color);">
+            <h3 style="color: var(--accent-orange); font-size: 1.5rem; margin-bottom: 1rem;">
+                <i class="fas fa-eye" style="margin-right: 10px;"></i> Nuestra Visión
+            </h3>
+            <p style="color: var(--text-muted); line-height: 1.8;">
+                Ser reconocidos como una solución de referencia en automatización de procesos para la industria alimentaria colombiana, expandiendo nuestras capacidades hacia la integración completa con tecnologías de la Industria 4.0 y convirtiéndonos en un aliado estratégico para la transformación digital del sector.
+            </p>
+        </div>
+    </div>
+</section>
+<footer><p>© 2026 Proyecto AAPI – Tecnología en Automatización Industrial</p></footer>
+<a href="https://wa.me/573003747010?text=Hola%20AAPI%2C%20vi%20su%20p%C3%A1gina%20web%20y%20me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20monitoreo%20industrial." class="whatsapp-float" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+</body>
+</html>
